@@ -1,4 +1,5 @@
 using ETickets.Data;
+using ETickets.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,7 +28,12 @@ namespace ETickets
         {
             //Db Context configuration
 
-            services.AddDbContext<AppDbContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
+
+            //Services configuration
+            services.AddScoped<IActorsService, ActorsService>();
+            services.AddScoped<IProducersService, ProducersService>();
+            services.AddScoped<ICinemasService, CinemasService>();
 
             services.AddControllersWithViews();
         }

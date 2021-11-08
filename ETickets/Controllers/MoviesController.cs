@@ -1,5 +1,6 @@
 ﻿using ETickets.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,10 @@ namespace ETickets.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var allCinemas = await _context.Movies.Include(n=>n.Cinema).OrderBy(n=>n.Name).ToListAsync();
+            return View(allCinemas);
         }
     }
 }
